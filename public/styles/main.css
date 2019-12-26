@@ -1,3 +1,9 @@
+html, body, .container {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
@@ -9,13 +15,40 @@ a {
   color: #feb61a;
 }
 
+button {
+  padding: 2px;
+  border-radius: 8px;
+}
+
+button:disabled img {
+  opacity: 0.4;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 .content {
   width: 600px;
   margin: auto;
 }
 
+.controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  background-color: #202020;
+  padding: 10px;
+}
+
 .hero-img {
   margin: 20px;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
 }
 
 .panel {
@@ -37,4 +70,40 @@ a {
   width: 500px;
   margin: 20px;
   padding: 5px;
+}
+
+#map {
+  height: 300px;
+  width: 300px;
+  margin-bottom: 10px;
+}
+
+#panorama {
+  height: 100%;
+  width: 100%;
+}
+
+#result-modal {
+  z-index: 2;
+  position: fixed;
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#result-container {
+  position: relative;
+  background-color: #202020;
+  padding: 10px;
+  margin: auto;
+  width: 600px;
+}
+
+#result-map {
+  height: 400px;
+  width: 600px;
+  margin: 0 auto 10px auto;
 }

@@ -9,11 +9,41 @@
 
   <title>Locator | Pegman</title>
 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
+  <div class="container">
+    <div id="panorama"></div>
+    <div class="controls">
+      <div id="map"></div>
+      <div>
+        <button id="reset" type="button">
+          <img class="icon" src="images/return.svg" title="Back to start">
+        </button>
+        <button id="collapse" type="button">
+          <img class="icon" src="images/chevron-up.svg" title="Collapse map">
+        </button>
+        <button id="expand" type="button" hidden>
+          <img class="icon" src="images/chevron-down.svg" title="Expand map">
+        </button>
+        <button id="submit" type="button" disabled>
+          <img class="icon" src="images/checkmark.svg" title="Submit guess">
+        </button>
+      </div>
+    </div>
+    <div id="result-modal" hidden>
+      <div id="result-container">
+        <div id="result-map"></div>
+        You were <span id="result-distance"></span> off.
+      </div>
+    </div>
+  </div>
   <script src="scripts/locator.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?callback=initialize">
+  </script>
 </body>
 
 </html>

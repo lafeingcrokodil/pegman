@@ -9,6 +9,10 @@ The teleporter page is for teleporting Pegman to all corners of the world.
 
 The locator page is for helping Pegman figure out where he was teleported to.
 
+## Icons
+
+Most of the icons used in this app are [Dripicons](http://demo.amitjakhu.com/dripicons/). The only exception is Pegman himself, whom I found among [Google's official logos](https://www.google.com/permissions/trademark/logos-list/).
+
 ## Server
 
 To start the server:
