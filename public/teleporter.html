@@ -9,10 +9,36 @@
 
   <title>Teleporter | Pegman</title>
 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
+  <div>
+    <div class="content">
+      <img class="hero-img" src="images/pegman.png">
+      <p>Would you like to choose a mysterious location for Pegman to teleport to?</p>
+      <p>If so, please proceed as follows:</p>
+      <div class="panel">
+        <ol>
+          <li>Open <a href="https://www.google.de/maps/@0,0,2z?hl=en" target="__blank" rel="noreferrer noopener">Google Maps</a>.</li>
+          <li>Click on the little yellow Pegman icon at the bottom right and drag it over the map. A bunch of blue lines should appear.</li>
+          <li>Drop Pegman on one of the blue lines, wherever you'd like. That should open a Google Street View panorama.</li>
+          <li>Move around until you're satisfied with the exact location.</li>
+          <li>Copy the URL that's in the address bar of your browser.</li>
+          <li>Paste the URL into the input field below and press ENTER.</li>
+        </ol>
+      </div>
+      <input type="text" class="url-input" placeholder="Street View URL" onchange="handleURL(this.value);">
+      <div id="teleporter-output" hidden=true>
+        <p>
+          All set!
+          The <a id="locator-link" target="__blank" rel="noreferrer noopener">Pegman Locator URL</a> has been generated and copied to your clipboard.
+          You can now share it with whomever you'd like to challenge to find Pegman's location.
+        </p>
+      </div>
+    </div>
+  </div>
   <script src="scripts/teleporter.js"></script>
 </body>
 

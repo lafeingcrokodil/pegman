@@ -1,3 +1,40 @@
 body {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  color: #d0d0d0;
   background-color: #202020;
+}
+
+a {
+  color: #feb61a;
+}
+
+.content {
+  width: 600px;
+  margin: auto;
+}
+
+.hero-img {
+  margin: 20px;
+}
+
+.panel {
+  text-align: left;
+  color: #202020;
+  background-color: #feb61a;
+  border: 2px solid #d0d0d0;
+  border-radius: 8px;
+  padding-right: 15px;
+}
+
+.panel a {
+  color: #404040;
+  font-weight: bold;
+}
+
+.url-input {
+  border-radius: 10px;
+  width: 500px;
+  margin: 20px;
+  padding: 5px;
 }
