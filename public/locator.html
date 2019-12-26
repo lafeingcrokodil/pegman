@@ -16,23 +16,11 @@
 <body>
   <div id="main-container" class="container">
     <div id="panorama"></div>
-    <div class="controls">
+    <div id="mini-map" class="control">
       <div id="map"></div>
-      <div>
-        <button id="reset" type="button">
-          <img class="icon" src="images/return.svg" title="Back to start">
-        </button>
-        <button id="collapse" type="button">
-          <img class="icon" src="images/chevron-up.svg" title="Collapse map">
-        </button>
-        <button id="expand" type="button" hidden>
-          <img class="icon" src="images/chevron-down.svg" title="Expand map">
-        </button>
-        <button id="submit" type="button" disabled>
-          <img class="icon" src="images/checkmark.svg" title="Submit guess">
-        </button>
-      </div>
+      <button id="submit" type="button" disabled>Submit guess</button>
     </div>
+    <img id="map-icon" class="control icon" src="images/map-24px.svg" title="Expand map" hidden>
   </div>
   <div id="result-container" hidden>
     <div class="content">

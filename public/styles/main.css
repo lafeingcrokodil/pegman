@@ -16,11 +16,14 @@ a {
 }
 
 button {
-  padding: 2px;
-  border-radius: 8px;
+  background-color: #feb61a;
+  border-color: orange;
+  font-weight: bold;
+  padding: 5px;
+  width: 100%;
 }
 
-button:disabled img {
+button:disabled {
   opacity: 0.4;
 }
 
@@ -33,7 +36,7 @@ button:hover {
   margin: auto;
 }
 
-.controls {
+.control {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -49,8 +52,19 @@ button:hover {
 }
 
 .icon {
-  width: 32px;
-  height: 32px;
+  background-color: #202020;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.icon-large {
+  margin: 5px 14px 14px 0;
+  padding: 8px;
+}
+
+.icon-small {
+  margin: 10px;
+  padding: 5px;
 }
 
 .panel {

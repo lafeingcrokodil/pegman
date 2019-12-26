@@ -11,7 +11,11 @@ The locator page is for helping Pegman figure out where he was teleported to.
 
 ## Icons
 
-Most of the icons used in this app are [Dripicons](http://demo.amitjakhu.com/dripicons/). The only exception is Pegman himself, whom I found among [Google's official logos](https://www.google.com/permissions/trademark/logos-list/).
+The app uses icons from a few different sources:
+
+- [Pegman](https://www.google.com/permissions/trademark/logos-list/) - adjusted size and background transparency
+- [map marker](http://maps.google.com/mapfiles/ms/icons/red-dot.png) - adjusted colour
+- [material icons](https://material.io/resources/icons/?style=baseline)
 
 ## Server
 
