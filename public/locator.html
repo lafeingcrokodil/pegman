@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <div class="container">
+  <div id="main-container" class="container">
     <div id="panorama"></div>
     <div class="controls">
       <div id="map"></div>
@@ -33,11 +33,15 @@
         </button>
       </div>
     </div>
-    <div id="result-modal" hidden>
-      <div id="result-container">
-        <div id="result-map"></div>
-        You were <span id="result-distance"></span> off.
-      </div>
+  </div>
+  <div id="result-container" hidden>
+    <div class="content">
+      <img class="hero-img" src="images/pegman.png">
+      <p>Pegman thanks you for your assistance!</p>
+      <p>His true location was a mere <span id="result-distance"></span> away.</p>
+      <p>For such an excellent guess, you have earned</p>
+      <p><span id="result-score"></span></p>
+      <div id="result-map"></div>
     </div>
   </div>
   <script src="scripts/locator.js"></script>

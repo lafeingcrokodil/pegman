@@ -42,7 +42,9 @@ class Locator {
   submit() {
     this.resultElements = this.setupResultElements();
     this.htmlElements.result.distance.innerText = displayDistance(distance(this.position, this.guess));
-    this.htmlElements.result.modal.hidden = false;
+    this.htmlElements.result.score.innerText = '5000 points';
+    this.htmlElements.result.container.hidden = false;
+    this.htmlElements.container.hidden = true;
   }
 
   parseQueryString() {
@@ -58,12 +60,14 @@ class Locator {
         expand: document.getElementById('expand'),
         submit: document.getElementById('submit')
       },
+      container: document.getElementById('main-container'),
       map: document.getElementById('map'),
       panorama: document.getElementById('panorama'),
       result: {
+        container: document.getElementById('result-container'),
         distance: document.getElementById('result-distance'),
         map: document.getElementById('result-map'),
-        modal: document.getElementById('result-modal')
+        score: document.getElementById('result-score')
       }
     };
   }
@@ -81,7 +85,7 @@ class Locator {
         showRoadLabels: false
       }),
       marker: new google.maps.Marker({
-        icon: {url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'}
+        icon: {url: 'images/orange-dot.png'}
       })
     };
   }
@@ -96,12 +100,12 @@ class Locator {
       markers: {
         true: new google.maps.Marker({
           map: map,
-          icon: {url: 'http://maps.google.com/mapfiles/ms/icons/green.png'},
+          icon: {url: 'images/pegman32.png'},
           position: this.position
         }),
         guess: new google.maps.Marker({
           map: map,
-          icon: {url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'},
+          icon: {url: 'images/orange-dot.png'},
           position: this.guess
         })
       },

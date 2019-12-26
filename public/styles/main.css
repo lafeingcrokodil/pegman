@@ -43,7 +43,9 @@ button:hover {
 }
 
 .hero-img {
-  margin: 20px;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  height: 64px;
 }
 
 .icon {
@@ -83,27 +85,18 @@ button:hover {
   width: 100%;
 }
 
-#result-modal {
-  z-index: 2;
-  position: fixed;
-  padding-top: 50px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+#result-distance {
+  font-weight: bold;
 }
 
-#result-container {
-  position: relative;
-  background-color: #202020;
-  padding: 10px;
-  margin: auto;
-  width: 600px;
+#result-score {
+  color: #feb61a;
+  font-weight: bold;
+  font-size: x-large;
 }
 
 #result-map {
-  height: 400px;
-  width: 600px;
+  height: 350px;
+  width: 500px;
   margin: 0 auto 10px auto;
 }
