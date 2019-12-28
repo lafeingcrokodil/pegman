@@ -1,29 +1,51 @@
 function initialize() {
-  new Locator();
+  new Locator(getHTMLElements(), parseQueryString());
 }
 
 class Locator {
-  constructor() {
-    let data = this.parseQueryString();
-    this.position = data.position;
-    this.pov = data.pov;
-    this.htmlElements = this.getHTMLElements();
-    this.miniMap = this.setupMiniMap();
-    this.panorama = this.setupPanorama();
+  constructor(htmlElements, data) {
+    this.htmlElements = htmlElements;
+    this.miniMap = new MiniMap(this.htmlElements.miniMap, this.submit.bind(this));
+    this.panorama = new Panorama(this.htmlElements.panorama, data);
+  }
+
+  submit() {
+    new Result(this.htmlElements.result, this.panorama.position, this.miniMap.guess);
+    this.htmlElements.locator.result.hidden = false;
+    this.htmlElements.locator.main.hidden = true;
+  }
+}
+
+class MiniMap {
+  constructor(htmlElements, submitHandler) {
+    this.htmlElements = htmlElements;
+
+    this.map = new google.maps.Map(this.htmlElements.map, {
+      center: {lat: 0, lng: 0},
+      disableDefaultUI: true,
+      zoom: 1
+    });
+    this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(this.getCollapseControl());
+    this.map.addListener('click', this.guess.bind(this));
+
+    this.marker = new google.maps.Marker({
+      icon: {url: 'images/orange-dot.png'}
+    });
+
     this.htmlElements.mapIcon.addEventListener('click', this.showMiniMap.bind(this));
-    this.htmlElements.submit.addEventListener('click', this.submit.bind(this));
+    this.htmlElements.submit.addEventListener('click', submitHandler);
   }
 
-  guess(event) {
-    this.guess = event.latLng.toJSON();
-    this.miniMap.marker.setPosition(this.guess);
-    this.miniMap.marker.setMap(this.miniMap.map);
-    this.htmlElements.submit.disabled = false;
-  }
-
-  reset() {
-    this.panorama.setPosition(this.position);
-    this.panorama.setPov(this.pov);
+  getCollapseControl() {
+    let control = document.createElement('div');
+    let img = document.createElement('img');
+    img.src = 'images/expand_less-24px.svg';
+    img.title = 'Hide map';
+    img.classList.add('icon');
+    img.classList.add('icon-small');
+    img.addEventListener('click', this.hideMiniMap.bind(this));
+    control.appendChild(img);
+    return control;
   }
 
   hideMiniMap() {
@@ -36,62 +58,27 @@ class Locator {
     this.htmlElements.miniMap.hidden = false;
   }
 
-  submit() {
-    this.setupResult();
-    this.htmlElements.result.distance.innerText = displayDistance(distance(this.position, this.guess));
-    this.htmlElements.result.score.innerText = '5000 points';
-    this.htmlElements.result.container.hidden = false;
-    this.htmlElements.container.hidden = true;
+  guess(event) {
+    this.guess = event.latLng.toJSON();
+    this.marker.setPosition(this.guess);
+    this.marker.setMap(this.map);
+    this.htmlElements.submit.disabled = false;
   }
+}
 
-  parseQueryString() {
-    let urlParams = new URLSearchParams(window.location.search);
-    return JSON.parse(atob(urlParams.get('data')));
-  }
-
-  getHTMLElements() {
-    return {
-      container: document.getElementById('main-container'),
-      mapIcon: document.getElementById('map-icon'),
-      miniMap: document.getElementById('mini-map'),
-      map: document.getElementById('map'),
-      panorama: document.getElementById('panorama'),
-      submit: document.getElementById('submit'),
-      result: {
-        container: document.getElementById('result-container'),
-        distance: document.getElementById('result-distance'),
-        map: document.getElementById('result-map'),
-        score: document.getElementById('result-score')
-      }
-    };
-  }
-  
-  setupMiniMap() {
-    let map = new google.maps.Map(this.htmlElements.map, {
-      center: {lat: 0, lng: 0},
-      disableDefaultUI: true,
-      zoom: 1
-    });
-    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(this.getCollapseControl());
-    map.addListener('click', this.guess.bind(this));
-    return {
-      map: map,
-      marker: new google.maps.Marker({
-        icon: {url: 'images/orange-dot.png'}
-      })
-    };
-  }
-
-  setupPanorama() {
-    let panorama = new google.maps.StreetViewPanorama(this.htmlElements.panorama, {
+class Panorama {
+  constructor(htmlElements, { position, pov }) {
+    this.htmlElements = htmlElements;
+    this.position = position;
+    this.pov = pov;
+    this.panorama = new google.maps.StreetViewPanorama(this.htmlElements.panorama, {
       addressControl: false,
       position: this.position,
       pov: this.pov,
       showRoadLabels: false,
       zoomControl: false
     });
-    panorama.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(this.getResetControl());
-    return panorama;
+    this.panorama.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(this.getResetControl());
   }
 
   getResetControl() {
@@ -107,20 +94,16 @@ class Locator {
     return control;
   }
 
-  getCollapseControl() {
-    let control = document.createElement('div');
-    let img = document.createElement('img');
-    img.src = 'images/expand_less-24px.svg';
-    img.title = 'Hide map';
-    img.classList.add('icon');
-    img.classList.add('icon-small');
-    img.addEventListener('click', this.hideMiniMap.bind(this));
-    control.appendChild(img);
-    return control;
+  reset() {
+    this.panorama.setPosition(this.position);
+    this.panorama.setPov(this.pov);
   }
+}
 
-  setupResult() {
-    let map = new google.maps.Map(this.htmlElements.result.map, {
+class Result {
+  constructor(htmlElements, position, guess) {
+    this.htmlElements = htmlElements;
+    let map = new google.maps.Map(this.htmlElements.map, {
       center: {lat: 0, lng: 0},
       disableDefaultUI: true,
       zoom: 1
@@ -128,18 +111,48 @@ class Locator {
     new google.maps.Marker({
       map: map,
       icon: {url: 'images/pegman32.png'},
-      position: this.position
+      position: position
     });
     new google.maps.Marker({
       map: map,
       icon: {url: 'images/orange-dot.png'},
-      position: this.guess
+      position: guess
     });
     new google.maps.Polyline({
       map: map,
-      path: [this.position, this.guess]
+      path: [position, guess]
     });
+    this.htmlElements.distance.innerText = displayDistance(distance(position, guess));
+    this.htmlElements.score.innerText = '5000 points';
   }
+}
+
+function parseQueryString() {
+  let urlParams = new URLSearchParams(window.location.search);
+  return JSON.parse(atob(urlParams.get('data')));
+}
+
+function getHTMLElements() {
+  return {
+    locator: {
+      main: document.getElementById('main-container'),
+      result: document.getElementById('result-container')
+    },
+    miniMap: {
+      mapIcon: document.getElementById('map-icon'),
+      miniMap: document.getElementById('mini-map'),
+      map: document.getElementById('map'),
+      submit: document.getElementById('submit')
+    },
+    panorama: {
+      panorama: document.getElementById('panorama')
+    },
+    result: {
+      distance: document.getElementById('result-distance'),
+      map: document.getElementById('result-map'),
+      score: document.getElementById('result-score')
+    }
+  };
 }
 
 /**
