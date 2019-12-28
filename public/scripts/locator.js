@@ -126,7 +126,8 @@ class Result {
     });
     new google.maps.Polyline({
       map: map,
-      path: [position, guess]
+      path: [position, guess],
+      strokeColor: '#202020'
     });
 
     let d = google.maps.geometry.spherical.computeDistanceBetween(position, guess);
