@@ -42,4 +42,45 @@ describe('Locator', () => {
     ];
     run(Locator.displayDistance, testCases);
   });
+
+  describe('#score', () => {
+    let testCases = [
+      {
+        description: 'should return perfect score for 0 m',
+        args: [0],
+        result: 5000
+      },
+      {
+        description: 'should return perfect score for 200 m',
+        args: [200],
+        result: 5000
+      },
+      {
+        description: 'should return 4999 for 201 m',
+        args: [201],
+        result: 4999
+      },
+      {
+        description: 'should return 4975 for 10 km',
+        args: [10000],
+        result: 4975
+      },
+      {
+        description: 'should return 3033 for 1,000 km',
+        args: [1000000],
+        result: 3033
+      },
+      {
+        description: 'should return 410 for 5,000 km',
+        args: [5000000],
+        result: 410
+      },
+      {
+        description: 'should return 8 for 13,000 km',
+        args: [13000000],
+        result: 8
+      }
+    ];
+    run(Locator.score, testCases);
+  });
 });

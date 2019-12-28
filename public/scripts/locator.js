@@ -202,4 +202,5 @@ function score(d) {
 if (typeof exports !== 'undefined') {
   // Export functions that we want to test.
   exports.displayDistance = displayDistance;
+  exports.score = score;
 }
