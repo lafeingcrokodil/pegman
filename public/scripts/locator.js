@@ -1,5 +1,11 @@
 function initialize() {
-  new Locator(getHTMLElements(), parseQueryString());
+  getPanoramaData((err, data) => {
+    if (err) {
+      console.error(err);
+      return alert(err.message);
+    }
+    new Locator(getHTMLElements(), data);
+  });
 }
 
 class Locator {
@@ -7,6 +13,7 @@ class Locator {
     this.htmlElements = htmlElements;
     this.miniMap = new MiniMap(this.htmlElements.miniMap, this.submit.bind(this));
     this.panorama = new Panorama(this.htmlElements.panorama, data);
+    this.htmlElements.locator.main.hidden = false;
   }
 
   submit() {
@@ -136,9 +143,28 @@ class Result {
   }
 }
 
+function getPanoramaData(callback) {
+  let data = parseQueryString();
+  if (data) {
+    return callback(null, data);
+  }
+  randomPosition((err, position) => {
+    if (err) {
+      return callback(err);
+    }
+    return callback(null, {
+      position: position.toJSON(),
+      pov: {heading: 0, pitch: 0} // default POV
+    });
+  });
+}
+
 function parseQueryString() {
   let urlParams = new URLSearchParams(window.location.search);
-  return JSON.parse(atob(urlParams.get('data')));
+  let encodedData = urlParams.get('data');
+  if (encodedData) {
+    return JSON.parse(atob(encodedData));
+  }
 }
 
 function getHTMLElements() {
