@@ -105,6 +105,7 @@ class Panorama {
 class Result {
   constructor(htmlElements, position, guess) {
     this.htmlElements = htmlElements;
+
     let map = new google.maps.Map(this.htmlElements.map, {
       center: {lat: 0, lng: 0},
       disableDefaultUI: true,
@@ -124,8 +125,10 @@ class Result {
       map: map,
       path: [position, guess]
     });
-    this.htmlElements.distance.innerText = displayDistance(distance(position, guess));
-    this.htmlElements.score.innerText = '5000 points';
+
+    let d = distance(position, guess);
+    this.htmlElements.distance.innerText = displayDistance(d);
+    this.htmlElements.score.innerText = score(d) + ' points';
   }
 }
 
@@ -214,6 +217,16 @@ function displayDistance(d) {
 
   // toLocaleString() adds thousands separators, e.g. "12345" -> "12,345"
   return rounded.toLocaleString() + ' ' + units;
+}
+
+/**
+ * Returns a whole number between 0 and 5000, based on the specified distance.
+ * The lower the distance, the higher the score.
+ * Source: https://www.reddit.com/r/geoguessr/comments/7ekj80/x/dq5trp0/
+ * @param {number} d Distance in metres.
+ */
+function score(d) {
+  return Math.round(5000 * Math.exp(-d/2000000));
 }
 
 // for testing purposes
