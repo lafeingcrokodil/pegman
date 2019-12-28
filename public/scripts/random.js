@@ -1,27 +1,3 @@
-let anchors = [
-  {lat: 52, lng: -9},
-  {lat: 52, lng: -8},
-  {lat: 53, lng: -9},
-  {lat: 53, lng: -8},
-  {lat: 54, lng: -8},
-  {lat: 54, lng: -7},
-  {lat: 53, lng: -7},
-  {lat: 55, lng: -4},
-  {lat: 55, lng: -3},
-  {lat: 54, lng: -3},
-  {lat: 53, lng: -3},
-  {lat: 53, lng: -2},
-  {lat: 53, lng: -1},
-  {lat: 52, lng: -4},
-  {lat: 52, lng: -3},
-  {lat: 52, lng: -2},
-  {lat: 52, lng: -1},
-  {lat: 51, lng: -3},
-  {lat: 51, lng: -2},
-  {lat: 51, lng: -1},
-  {lat: 51, lng: 0},
-];
-
 function randomPosition(callback) {
   let anchor = anchors[randomIndex(anchors)];
   let location = {
