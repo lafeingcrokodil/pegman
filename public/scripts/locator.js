@@ -72,11 +72,13 @@ class Panorama {
     this.position = position;
     this.pov = pov;
     this.panorama = new google.maps.StreetViewPanorama(this.htmlElements.panorama, {
-      addressControl: false,
       position: this.position,
       pov: this.pov,
-      showRoadLabels: false,
-      zoomControl: false
+      disableDefaultUI: true,
+      fullscreenControl: true,
+      motionTrackingControl: true,
+      panControl: true,
+      showRoadLabels: false
     });
     this.panorama.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(this.getResetControl());
   }
