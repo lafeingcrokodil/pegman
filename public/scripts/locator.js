@@ -202,9 +202,4 @@ function score(d) {
 if (typeof exports !== 'undefined') {
   // Export functions that we want to test.
   exports.displayDistance = displayDistance;
-
-  // The atob function isn't included in Node.js, so we define it ourselves.
-  function atob(str) {
-    return console.log(Buffer.from(str, 'base64').toString());
-  }
 }
