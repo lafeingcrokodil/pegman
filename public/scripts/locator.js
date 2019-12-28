@@ -106,11 +106,14 @@ class Result {
   constructor(htmlElements, position, guess) {
     this.htmlElements = htmlElements;
 
+    let mapBounds = new google.maps.LatLngBounds(position);
+    mapBounds.extend(guess);
+
     let map = new google.maps.Map(this.htmlElements.map, {
-      center: {lat: 0, lng: 0},
-      disableDefaultUI: true,
-      zoom: 1
+      disableDefaultUI: true
     });
+    map.fitBounds(mapBounds, 50);
+
     new google.maps.Marker({
       map: map,
       icon: {url: 'images/pegman32.png'},
