@@ -2,41 +2,6 @@ let Locator = require('../public/scripts/locator');
 let {run} = require('./helper');
 
 describe('Locator', () => {
-  describe('#distance', () => {
-    let testCases = [
-      {
-        description: 'should correctly calculate distance',
-        args: [
-          {lat: 46.5688264, lng: 8.5606293},
-          {lat: -25.690935, lng: -54.4376911}
-        ],
-        result: 10221309.567865608
-      }
-    ];
-    run(Locator.distance, testCases);
-  });
-
-  describe('#toRadians', () => {
-    let testCases = [
-      {
-        description: 'should return correct result for 0',
-        args: [0],
-        result: 0
-      },
-      {
-        description: 'should return correct result for 180',
-        args: [180],
-        result: Math.PI
-      },
-      {
-        description: 'should return correct result for -90',
-        args: [-90],
-        result: -Math.PI/2
-      }
-    ];
-    run(Locator.toRadians, testCases);
-  });
-
   describe('#displayDistance', () => {
     let testCases = [
       {

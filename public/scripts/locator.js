@@ -59,7 +59,7 @@ class MiniMap {
   }
 
   guess(event) {
-    this.guess = event.latLng.toJSON();
+    this.guess = event.latLng;
     this.marker.setPosition(this.guess);
     this.marker.setMap(this.map);
     this.htmlElements.submit.disabled = false;
@@ -69,7 +69,7 @@ class MiniMap {
 class Panorama {
   constructor(htmlElements, { position, pov }) {
     this.htmlElements = htmlElements;
-    this.position = position;
+    this.position = new google.maps.LatLng(position);
     this.pov = pov;
     this.panorama = new google.maps.StreetViewPanorama(this.htmlElements.panorama, {
       position: this.position,
@@ -126,7 +126,7 @@ class Result {
       path: [position, guess]
     });
 
-    let d = distance(position, guess);
+    let d = google.maps.geometry.spherical.computeDistanceBetween(position, guess);
     this.htmlElements.distance.innerText = displayDistance(d);
     this.htmlElements.score.innerText = score(d) + ' points';
   }
@@ -158,37 +158,6 @@ function getHTMLElements() {
       score: document.getElementById('result-score')
     }
   };
-}
-
-/**
- * Calculates the great-circle distance between two points on the earth.
- * Only guaranteed to be accurate within 0.5%, since the earth isn't a perfect sphere.
- * Source: https://www.movable-type.co.uk/scripts/latlong.html
- * @param {google.maps.LatLng} p A point in geographical coordinates: latitude and longitude.
- * @param {google.maps.LatLng} q Another point in geographical coordinates.
- */
-function distance(p, q) {
-  const R = 6371e3; // approximate radius of the earth in metres
-
-  let φ1 = toRadians(p.lat);
-  let φ2 = toRadians(q.lat);
-  let Δφ = toRadians(q.lat-p.lat);
-  let Δλ = toRadians(q.lng-p.lng);
-
-  let a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-          Math.cos(φ1) * Math.cos(φ2) *
-          Math.sin(Δλ/2) * Math.sin(Δλ/2);
-  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-  return R * c;
-}
-
-/**
- * Converts degrees to radians.
- * @param {number} degrees Angle in degrees.
- */
-function toRadians(degrees) {
-  return degrees * Math.PI / 180;
 }
 
 /**
@@ -232,8 +201,6 @@ function score(d) {
 // for testing purposes
 if (typeof exports !== 'undefined') {
   // Export functions that we want to test.
-  exports.distance = distance;
-  exports.toRadians = toRadians;
   exports.displayDistance = displayDistance;
 
   // The atob function isn't included in Node.js, so we define it ourselves.
